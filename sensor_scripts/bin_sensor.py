@@ -47,9 +47,9 @@ while True:
         motion = list(data.motion_indicator.motion)
         
         if max(motion) > 50:
-           print("Motion detected, waiting 5 seconds to detect bin level")
+           print("Motion detected, waiting 10 seconds to detect bin level")
            
-           time.sleep(5)
+           time.sleep(10)
            
            distances = list(data.distance_mm[0])
            print("distance count:", len(distances))
@@ -74,17 +74,35 @@ while True:
            print("\n")
            time.sleep(2)
            
+           print("Calculating weight inside bin, please allow time...")
            
-           values = hx.get_raw_data()
-           avg = sum(values) / len(values)
-    
-           weight = (avg - offset) / scale
-           weight_g = ((avg - offset) / scale) * 1000
-    
-           print("Weight (kg):", round(weight, 2))
-           print("Weight (g):", round(weight_g, 2))
-    
-           time.sleep(1)
            
+           weight_readings_kg = []
+           for i in range(10):
+               values = hx.get_raw_data()
+               avg = sum(values) / len(values)
+        
+               weight = (avg - offset) / scale
+               #weight_g = ((avg - offset) / scale) * 1000
+               
+               weight_readings_kg.append(weight)
+        
+               #print("Weight (kg):", abs(round(weight, 2)))
+               #print("Weight (g):", abs(round(weight_g, 2)))
+        
+               time.sleep(0.5)
+           
+           weight_cumulative = 0
+           for x in range(len(weight_readings_kg)):
+               weight_cumulative += weight_readings_kg[x]
+           mean_weight = ((weight_cumulative)/len(weight_readings_kg))
+           
+           mean_weight_g = mean_weight * 1000
+           
+           print("Weight (kg):", abs(round(mean_weight, 2)))
+           print("Weight (g):", abs(round(mean_weight_g, 2)))
+           print(weight_readings_kg)
+           
+               
         
     time.sleep(0.05)

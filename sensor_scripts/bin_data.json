@@ -1,0 +1,19 @@
+{
+    "bin_id": "BIN_001",
+    "timestamp": "2026-05-06T18:43:40",
+    "fill_level": {
+        "distance_mm": 138.0,
+        "percentage": 31.0,
+        "status": "Available"
+    },
+    "weight": {
+        "current_weight_kg": 0.134,
+        "current_weight_g": 134.49,
+        "weight_change_g": 149.56
+    },
+    "environment": {
+        "temperature_c": 19.8,
+        "pressure_hpa": 994.0,
+        "humidity_percent": 48.2
+    }
+}
